@@ -1,0 +1,50 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Open_Domain_Comics_Windows_Windows_10_"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Universal="using:Microsoft.AdMediator.Universal"
+    x:Class="Open_Domain_Comics_Windows_Windows_10_.MainPage"
+     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="ItemTemplate">
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Universal:AdMediatorControl Grid.Row="0" Name="MainPageItemTemplateAd_Desktop" Id="0001" HorizontalAlignment="Center" Height="50" Margin="0" VerticalAlignment="Top" Width="320"/>
+                
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" FontSize="30" HorizontalAlignment="Stretch" Content="{Binding Title}" VerticalAlignment="Stretch" Click="Button_click"/>
+                    <Image Grid.Row="1" Source="{Binding GetImageSource}" Width="500" Height="600"/>
+
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid>
+            <FlipView ItemsSource="{Binding GroupItems}" ItemTemplate="{StaticResource ItemTemplate}"/>
+        </Grid>
+
+       
+        
+    </Grid>
+</Page>

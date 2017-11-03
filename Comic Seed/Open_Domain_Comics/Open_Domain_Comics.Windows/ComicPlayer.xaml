@@ -1,0 +1,79 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Open_Domain_Comics"
+    xmlns:common="using:Open_Domain_Comics.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Windows81="using:Microsoft.AdMediator.Windows81"
+    x:Name="pageRoot"
+    x:Class="Open_Domain_Comics.ComicPlayer"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="Standard310x260ItemTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Windows81:AdMediatorControl Name="ComicPlayerPageItemTemplateAd_Desktop" Id="3500" HorizontalAlignment="Center" Height="90" Margin="0" VerticalAlignment="Top" Width="728"/>
+                
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" HorizontalScrollMode="Auto">
+                    <Image Source="{Binding}" Stretch="Uniform"/>
+
+                </ScrollViewer>
+            </Grid>
+          
+        </DataTemplate>
+    </Page.Resources>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid>
+       
+
+        <Grid  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            
+                        <Grid Grid.Row="1" Name="mainGrid" DataContext="{Binding ComicItems}">
+                            <FlipView  ItemsSource="{Binding GetImageSourceList}" ItemTemplate="{StaticResource Standard310x260ItemTemplate}" VerticalContentAlignment="Stretch"/>
+
+                        </Grid>
+                        
+                 
+
+            <!-- Back button and page title -->
+            <Grid  DataContext="{Binding ComicItems}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+					Style="{StaticResource NavigationBackButtonNormalStyle}"
+					VerticalAlignment="Top"
+					AutomationProperties.Name="Back"
+					AutomationProperties.AutomationId="BackButton"
+					AutomationProperties.ItemType="Navigation Button"/>
+                <TextBlock x:Name="pageTitle"  Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+					IsHitTestVisible="false" Text="{Binding Title}" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+
+</Page>
